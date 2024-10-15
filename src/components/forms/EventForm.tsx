@@ -150,34 +150,50 @@ export function EventForm({
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Are you sure</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your this event.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction disabled={isDeletePending || form.formState.isSubmitting} variant="destructive" onClick={() => {
-                  startDeleteTransition(async () => {
-                    const data = await deleteEvent(event.id)
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your this event.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    disabled={isDeletePending || form.formState.isSubmitting}
+                    variant="destructive"
+                    onClick={() => {
+                      startDeleteTransition(async () => {
+                        const data = await deleteEvent(event.id);
 
-                    if (data?.error) {
-                      form.setError("root", {
-                        message: "There was an error deleting your event"
-                      })
-                    }
-                  })
-                }}>Delete</AlertDialogAction>
-              </AlertDialogFooter>
+                        if (data?.error) {
+                          form.setError('root', {
+                            message: 'There was an error deleting your event',
+                          });
+                        }
+                      });
+                    }}
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           )}
-          <Button type="button" asChild variant="outline">
+          <Button
+            disabled={isDeletePending || form.formState.isSubmitting}
+            type="button"
+            asChild
+            variant="outline"
+          >
             <Link href="/events">Cancel</Link>
           </Button>
-          <Button type="submit">Save</Button>
+          <Button
+            disabled={isDeletePending || form.formState.isSubmitting}
+            type="submit"
+          >
+            Save
+          </Button>
         </div>
       </form>
     </Form>
